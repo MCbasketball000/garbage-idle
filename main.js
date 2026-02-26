@@ -29,3 +29,6 @@ function CreateElementBy(type,content,pos,pos1,pos2,opcode){
 function use(opcode){
     ;
 }
+function refreshbutton(){
+    
+}
