@@ -1,1 +1,1 @@
-(游玩)[MCbasketball000.github.io/garbage-idle]
+[游玩](MCbasketball000.github.io/garbage-idle)
