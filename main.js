@@ -1,12 +1,31 @@
-document.body.style.backgroundColor = "#282828"
-{
-    var newDiv = document.createElement("div");
-    newDiv.textContent = "作者：MC篮球";
+function CreateElementBy(type,content,pos,pos1,pos2,opcode){
+    var newDiv = document.createElement(type);
+    newDiv.textContent = content;
     newDiv.style.position = "absolute";
-    newDiv.style.bottom = "0px";
-    newDiv.style.right = "0px";
-    newDiv.addEventListener("click", function () {
-        window.location.replace("https://space.bilibili.com/3546613752531863?spm_id_from=333.40164.0.0")
-    });
+    //pos：1是左上，2是右上，3是左下，4是右下
+    if(pos == 1)
+    {
+        newDiv.style.top = pos1;
+        newDiv.style.left = pos2;
+    }
+    if(pos == 2)
+    {
+        newDiv.style.top = pos1;
+        newDiv.style.right = pos2;
+    }
+    if(pos == 3)
+    {
+        newDiv.style.bottom = pos1;
+        newDiv.style.left = pos2;
+    }
+    if(pos == 4)
+    {
+        newDiv.style.bottom = pos1;
+        newDiv.style.right = pos2;
+    }
+    newDiv.addEventListener("click", use(opcode));
     document.body.appendChild(newDiv);
+}
+function use(opcode){
+    ;
 }
