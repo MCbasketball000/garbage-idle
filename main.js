@@ -1,3 +1,4 @@
+//load
 function CreateElementBy(type,content,pos,pos1,pos2,opcode,lengthz,widthz){
     var newDiv = document.createElement(type);
     newDiv.style.width = widthz;
@@ -42,6 +43,9 @@ function use(opcode){
     ;
 }
 function refreshbutton(){
-    CreateElementBy("button","测试",1,30,30,"test","50px","100px");
+    ;
+}
+function refreshResourse(){
+    CreateElementBy("div","测试",1,30,30,"test","50px","100px");
 }
 refreshbutton();
