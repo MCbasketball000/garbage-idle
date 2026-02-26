@@ -1,4 +1,4 @@
-document.body.style.backgroundColor = "#282828";
+document.body.style.backgroundColor = "#101010";
 var newDiv = document.createElement("div");
 newDiv.textContent = "作者：MC篮球";
 newDiv.style.position = "absolute";
