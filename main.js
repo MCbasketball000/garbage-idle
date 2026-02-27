@@ -1,8 +1,21 @@
-//load
+//存档部分（本来想单独写成一个文件的但是不会导入就算了
+var haveData;
+function load(){
+    haveData = localStorage.getItem("haveData");
+}
+function save(){
+    localStorage.setItem("haveData", haveData);
+}
+function init(){
+    haveData = true;
+    save();
+}
+load();
+if(haveData != true){
+    init();
+}
 function CreateElementBy(type,content,pos,pos1,pos2,opcode,lengthz,widthz){
     var newDiv = document.createElement(type);
-    newDiv.style.width = widthz;
-    newDiv.style.height = lengthz;
     newDiv.textContent = content;
     newDiv.style.position = "absolute";
     newDiv.id = opcode;
@@ -29,6 +42,8 @@ function CreateElementBy(type,content,pos,pos1,pos2,opcode,lengthz,widthz){
     }
     if(type == "button")
     {
+        newDiv.style.width = widthz;
+        newDiv.style.height = lengthz;
         newDiv.addEventListener("mouseenter", function(){
             this.classList.add('highlight');
         });
@@ -46,7 +61,8 @@ function refreshbutton(){
     ;
 }
 function refreshResourse(){
-    CreateElementBy("div","测试",1,30,30,"test","50px","100px");
+    CreateElementBy("div","测试",1,30,30,"test");
 }
 refreshbutton();
 refreshResourse();
+alert(haveData);
