@@ -14,6 +14,8 @@ load();
 if(haveData != true){
     init();
 }
+//-------------------------------------------------//
+
 function CreateElementBy(type,content,pos,pos1,pos2,opcode,lengthz,widthz){
     var newDiv = document.createElement(type);
     newDiv.textContent = content;
@@ -60,9 +62,15 @@ function use(opcode){
 function refreshbutton(){
     ;
 }
+function getLockedElement(){
+    ;
+}
 function refreshResourse(){
-    CreateElementBy("div","测试",1,30,30,"test");
+    for(var i = 0;i < 1;i++){
+
+        CreateElementBy("div","垃圾",1,30,30,"garbage");
+}
 }
 refreshbutton();
 refreshResourse();
-alert(haveData);
+alert(fetch("./register/resource.json"));
