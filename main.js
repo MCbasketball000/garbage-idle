@@ -83,7 +83,7 @@ function refreshResourse(){
 }    
 function main(fuck){
     console.log(fuck);
-    console.log(resourceRegister);
+    console.log(resourceRegister.garbage);
     
     refreshbutton();
     refreshResourse();
