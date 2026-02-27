@@ -1,20 +1,30 @@
-//存档部分（本来想单独写成一个文件的但是不会导入就算了
-var haveData;
-function load(){
-    haveData = localStorage.getItem("haveData");
+//一些乱七八糟的读取
+var resourceRegister;
+async function initregister()
+{
+    const response = await fetch("./register/resource.json");
+    resourceRegister = await response.json();
+    var haveData;
+    //存档部分（本来想单独写成一个文件的但是不会导入就算了
+    function load(){
+        haveData = localStorage.getItem("haveData");
+    }
+    function save(){
+        localStorage.setItem("haveData", haveData);
+    }
+    function init(){
+        haveData = true;
+        save();
+    }
+    load();
+    if(haveData != true){
+        init();
+    }
+    //-------------------------------------------------//
+    return 0;
 }
-function save(){
-    localStorage.setItem("haveData", haveData);
-}
-function init(){
-    haveData = true;
-    save();
-}
-load();
-if(haveData != true){
-    init();
-}
-//-------------------------------------------------//
+
+
 
 function CreateElementBy(type,content,pos,pos1,pos2,opcode,lengthz,widthz){
     var newDiv = document.createElement(type);
@@ -69,8 +79,18 @@ function refreshResourse(){
     for(var i = 0;i < 1;i++){
 
         CreateElementBy("div","垃圾",1,30,30,"garbage");
+    }
+}    
+function main(fuck){
+    console.log(fuck);
+    console.log(resourceRegister);
+    
+    refreshbutton();
+    refreshResourse();
+    console.log(resourceRegister);
 }
+async function run(){
+    const temp = await initregister();
+    main(temp);
 }
-refreshbutton();
-refreshResourse();
-alert(fetch("./register/resource.json"));
+run();
