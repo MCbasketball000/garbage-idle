@@ -36,8 +36,8 @@ function CreateElementBy(type,content,pos,pos1,pos2,opcode,lengthz,widthz){
             this.classList.remove('highlight');
         });
         newDiv.addEventListener("click", use(opcode));
-        document.body.appendChild(newDiv);
     }
+    document.body.appendChild(newDiv);
 }
 function use(opcode){
     ;
@@ -49,3 +49,4 @@ function refreshResourse(){
     CreateElementBy("div","测试",1,30,30,"test","50px","100px");
 }
 refreshbutton();
+refreshResourse();
