@@ -4,6 +4,8 @@ async function initregister()
 {
     const response = await fetch("./register/resource.json");
     resourceRegister = await response.json();
+    const response2 = await fetch("./lang/zh-cn.json");
+    languageRegister = await response2.json();
     var haveData;
     //存档部分（本来想单独写成一个文件的但是不会导入就算了
     function load(){
@@ -77,11 +79,9 @@ function getLockedElement(){
 }
 function refreshResourse(){
     var keys = Object.keys(resourceRegister);
-    alert(keys);
-    for(var i = 0;i < 1;i++){
-        
-        CreateElementBy("div","垃圾",1,30,30,"garbage");
-    }
+    keys.forEach(function(element, index) {
+        CreateElementBy("div",keys[index],1,index*10,0,JSON.stringify(resourceRegister[element]))
+    });
 }    
 function main(fuck){
     console.log(fuck);
