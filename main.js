@@ -76,8 +76,10 @@ function getLockedElement(){
     ;
 }
 function refreshResourse(){
+    var keys = Object.keys(resourceRegister);
+    alert(keys);
     for(var i = 0;i < 1;i++){
-
+        
         CreateElementBy("div","垃圾",1,30,30,"garbage");
     }
 }    

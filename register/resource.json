@@ -1,3 +1,5 @@
 {
-    "garbage":"aaabbbccc"
+    "garbage":{
+        "chance":"50"
+    }
 }
