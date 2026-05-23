@@ -1,3 +1,5 @@
+const GameID = "garbage_idle";
+
 function initall(){
     document.body.style.backgroundColor = "#101010";
     CreateElementBy("div",4,0,0,'author','#ffffff',NaN,NaN,'作者：MC篮球');
@@ -206,21 +208,27 @@ function updatecheck(){
     });
 }        
 async function main(){
+    function localStorageUse(k,v){
+        localStorage.setItem(GameID + '_' + k,v);
+    }
+    function localStorageGet(k){
+        return localStorage.getItem(GameID + '_' + k);
+    }
     function load(){
-        haveData = localStorage.getItem("haveData");
-        resource = JSON.parse(localStorage.getItem("resource"));
+        haveData = localStorageGet("haveData");
+        resource = JSON.parse(localStorageGet("resource"));
         if(haveData == 'true'){
             checkResource()
         }
-        upgrades = JSON.parse(localStorage.getItem("upgrades"));
+        upgrades = JSON.parse(localStorageGet("upgrades"));
         if(haveData == 'true'){
             checkUpgrades();
         }
     }
     function save(){
-        localStorage.setItem("haveData", haveData);
-        localStorage.setItem("resource", JSON.stringify(resource));
-        localStorage.setItem("upgrades", JSON.stringify(upgrades));
+        localStorageUse("haveData", haveData);
+        localStorageUse("resource", JSON.stringify(resource));
+        localStorageUse("upgrades", JSON.stringify(upgrades));
     }
     function init(){
         haveData = true;
