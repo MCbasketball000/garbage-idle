@@ -1,5 +1,14 @@
 {
-    "garbage":{
-        "chance":"50"
+    "point":{
+        "color":"#ffffff"
+    },
+    "resetpoint":{
+        "color":"#ff0000"
+    },
+    "gem":{
+        "color":"#f84dff"
+    },
+    "electric":{
+        "color":"#ffe866"
     }
 }
