@@ -1,19 +1,28 @@
-const ProjectID = "jsproject-template";
-//作者，提示
+const GameID = "mouse_clicker";
+
 function initall(){
     document.body.style.backgroundColor = "#101010";
     CreateElementBy("div",4,0,0,'author','#ffffff',NaN,NaN,'作者：MC篮球');
     CreateElementBy("div",4,0,250,'github','#a8da99',NaN,NaN,'Github');
     CreateElementBy("div",4,0,400,'qq','#ccda99',NaN,NaN,'点击加入qq群：1061107601');
 }
-//功能性函数
 function wait(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
+}
+async function initregister()
+{
+    const response = await fetch("./register/resource.json");
+    resourceRegister = await response.json();
+    const response2 = await fetch("./lang/zh-cn.json");
+    languageRegister = await response2.json();
+    const response3 = await fetch("./register/upgrade.json");
+    upgradeRegister = await response3.json()
+    return 0;
 }
 function RandomNum(min, max) {
   return Math.random() * (max - min) + min;
 }
-//创建元素以及运行
+
 function CreateElementBy(type,pos,pos1,pos2,opcode,color,lengthz,widthz,content,postype){
     var newDiv = document.createElement(type);
     if(postype == undefined){
@@ -93,47 +102,161 @@ function use(opcode){
         window.open('https://space.bilibili.com/3546613752531863?spm_id_from=333.1369.0.0', '_blank');
     }
     if(opcode == 'github'){
-        window.open('https://github.com/MCbasketball000/jsproject-template', '_blank');
+        window.open('https://github.com/MCbasketball000/mouse-clicker', '_blank');
     }
     if(opcode == 'qq'){
         window.open('https://qm.qq.com/q/TETg6zL52S', '_blank');
     }
+    if(opcode == 'reset'){
+        if(window.confirm("确定重置？这会重置你的前两个升级和所有点数，而你将获得"+String(Math.floor(resource.point / 100))+"重置点")){
+            resource.resetpoint += Math.floor(resource.point / 100)
+            resource.point = 0;
+            upgrades.click = 0;
+            upgrades.autoclick = 0;
+        }
+    }
+    if(upgradeList.includes(opcode)){
+        try2upgrade(opcode);
+    }
 }
+function try2upgrade(opcode){
+    if(checkUpdateResource(opcode)){
+        deleteresource(opcode);
+        upgrades[opcode] += 1;
+    }
+}
+function deleteresource(opcode){
+    var keys = Object.keys(upgradeRegister[opcode].resource);
+    keys.forEach(function(key, index) {
+        resource[key] -= Math.floor(upgradeRegister[opcode].resource[key].basic * Math.pow(upgradeRegister[opcode].resource[key].mul,upgrades[opcode]));
+    });
+}
+function checkUpdateResource(opcode){
+    var canUpdate = true
+    var keys = Object.keys(upgradeRegister[opcode].resource);
+    keys.forEach(function(key, index) {
+        if(resource[key] < Math.floor(upgradeRegister[opcode].resource[key].basic * Math.pow(upgradeRegister[opcode].resource[key].mul,upgrades[opcode]))){
+            canUpdate = false;
+        }
+    });
+    return canUpdate;
+}
+function refreshbutton(){
+    upgradeList = [];
+    CreateElementBy("button",1,40,40,'press','#ffffff',200,300,undefined,'%');
+    CreateElementBy("button",2,5,5,'reset','#ff0000',40,60,undefined,'px');
+    var keys = Object.keys(upgradeRegister);
+    keys.forEach(function(key, index) {
+        upgradeList.push(key);
+        CreateElementBy("button",1,200+index*75,15,key,upgradeRegister[key].color,45,160)
+    });
+}
+function refreshResourse(){
+    var keys = Object.keys(resourceRegister);
+    keys.forEach(function(key, index) {
+        CreateElementBy("div",1,index*35,0,key,resourceRegister[key]['color'])
+        CreateElementBy("div",1,index*35,150,key+'resource',resourceRegister[key]['color'],NaN,NaN,0)
+    });
+}
+function updateResource(){
+    var keys = Object.keys(resourceRegister);
+    keys.forEach(function(key, index) {
+        document.getElementById(key+'resource').innerHTML=resource[key];
+    });
+} 
+function checkResource(){
+    var keys = Object.keys(resourceRegister);
+    keys.forEach(function(key, index) {
+        if(resource[key] == undefined){
+            resource[key] = 0;
+        }
+    });
+}   
+function checkUpgrades(){
+    var keys = Object.keys(upgradeRegister);
+    keys.forEach(function(key, index) {
+        if(upgrades[key] == undefined){
+            upgrades[key] = 0;
+        }
+    });
+}
+function addresource(){
+    var keys = Object.keys(upgradeEffect);
+    keys.forEach(function(key, index) {
+        if(resource[key] != undefined){
+            resource[key] += upgradeEffect[key];
+            if(key == 'point'){
+                if(Math.floor(RandomNum(1,100)) <= upgradeEffect.gemautoclick){
+                    resource['gem'] += 1;
+                };
+                resource[key] += Math.ceil(upgradeEffect[key] * upgradeEffect.electricuse * resource.electric / 10000);
+            }
+        }
+    });
+}
+function updatecheck(){
+    upgradeEffect = {};
+    var keys = Object.keys(upgrades);
+    keys.forEach(function(key, index) {
+        var keys2 = Object.keys(upgradeRegister[key].effect);
+        keys2.forEach(function(key2, index) {
+            if(upgradeEffect[key2] == undefined){
+                upgradeEffect[key2] = 0;
+            }
+            upgradeEffect[key2] += upgradeRegister[key].effect[key2] * upgrades[key];
+        });
+    });
+}        
 async function main(){
-    //本地存储
     function localStorageUse(k,v){
         localStorage.setItem(GameID + '_' + k,v);
     }
     function localStorageGet(k){
         return localStorage.getItem(GameID + '_' + k);
     }
-    //保存读取
     function load(){
         haveData = localStorageGet("haveData");
+        resource = JSON.parse(localStorageGet("resource"));
+        if(haveData == 'true'){
+            checkResource()
+        }
+        upgrades = JSON.parse(localStorageGet("upgrades"));
+        if(haveData == 'true'){
+            checkUpgrades();
+        }
     }
     function save(){
         localStorageUse("haveData", haveData);
+        localStorageUse("resource", JSON.stringify(resource));
+        localStorageUse("upgrades", JSON.stringify(upgrades));
     }
     function init(){
         haveData = true;
+        resource = {};
+        checkResource();
+        upgrades = {};
+        checkUpgrades();
         save();
     }
     load();
     if(haveData != 'true'){
         init();
     }
+    refreshbutton();
+    refreshResourse();
     while(true){
+        updatecheck()
+        addresource()
         save();
         await wait(1000);
     }
 }
-//主循环体
 async function loop(){
     while(true){
+        updateResource();
         await wait(100);
     }
 }
-//运行
 async function run(){
     initall();
     await initregister();
