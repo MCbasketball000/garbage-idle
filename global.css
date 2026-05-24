@@ -1,13 +1,15 @@
 button {
-    background-color: #505050;
+    background-color: #101010;
     border: none;
     color: white;
     text-align: center;
     text-decoration: none;
     display: inline-block;
-    font-size: 25px;
+    font-size: 15px;
     writing-mode: horizontal-tb;
     white-space: nowrap;
+    border-style: solid;
+    border-width: 1px;
 }
 div {
     color: white;
